@@ -1,6 +1,7 @@
 import pygame, sys
 import pygame.locals
-
+WIDTH = 500
+HIGHT = 500
 class PongGame(object):
     def __init__(self,width, height):
         pygame.init()
@@ -88,10 +89,10 @@ class Pileczka(Przedmioty):
         self.rect.x += self.predkoscX
         self.rect.y += self.predkoscY
 
-        if self.rect.x < 0 or self.rect.x > self.x*2-30:
+        if self.rect.x < 0 or self.rect.x > WIDTH:
             self.odwrocX()
 
-        if self.rect.y < 0 or self.rect.y > self.y*2-30:
+        if self.rect.y < 0 or self.rect.y > HIGHT:
             self.odwrocY()
 
         for rakieta in args:
@@ -106,18 +107,26 @@ class Rakieta(Przedmioty):
         self.maxPredkosc = 10
         self.surface.fill(self.kolor)
     def ruc(self,x):
-        if self.rect.x> 0 :
-            self.rect.x += self.maxPredkosc*x
-        if self.rect.x< 500 :
-            self.rect.x += self.maxPredkosc*x
+        if self.rect.x > 0 and self.rect.x < self.x * 2 :
+            self.rect.x += self.maxPredkosc * x
+        elif self.rect.x > 0:
+            if x == 1:
+                pass
+            else:
+                self.rect.x += self.maxPredkosc * x
+        else :
+            if x == 1:
+                self.rect.x += self.maxPredkosc * x
+            else:
+                pass
 
-        self.rect.x += self.maxPredkosc*x
     def ruch(self, x):
         delta = x - self.rect.x
 
         if abs(delta) > self.maxPredkosc:
             delta = self.maxPredkosc if delta > 0 else -self.maxPredkosc
         self.rect.x += delta
+
 
 class Komputer(object):
     def __init__(self,rakieta,pileczka):
@@ -152,12 +161,12 @@ class Sedzia(object):
         surface.blit(text, rect)
 
     def draw_on(self, surface):
-        height = 500
+        height = HIGHT
         self.aktualizujWynik(height)
-        width = 500
+        width = WIDTH
 
         self.napiszTekst(surface, "Gracz: {}".format(self.wynik[0]), width/2, height * 0.3)
         self.napiszTekst(surface, "Komputer: {}".format(self.wynik[1]), width/2, height * 0.7)
 
 if __name__ == '__main__':
-    PongGame(500,500)
+    PongGame(WIDTH,HIGHT)
