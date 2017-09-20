@@ -45,7 +45,7 @@ class PongGame(object):
             self.sedzia.draw_on(self.screen)
 
             pygame.display.update()
-            self.fps_clock.tick(30)
+            self.fps_clock.tick(60)
             self.komputer.ruch()
 
 class Przedmioty(object):
@@ -67,8 +67,8 @@ class Pileczka(Przedmioty):
     def __init__(self,szerokosc, wysokosc, x, y,kolor=(0, 0, 100)):
         super(Pileczka, self).__init__(szerokosc, wysokosc,x, y,kolor)
 
-        self.predkoscX = 7
-        self.predkoscY = 7
+        self.predkoscX = 4
+        self.predkoscY = 4
         pilka = pygame.image.load("ball.png")
         self.surface.blit(pilka, (0, 0))
         pygame.display.update()
@@ -104,7 +104,7 @@ class Rakieta(Przedmioty):
     def __init__(self,szerokosc, wysokosc,x,y,kolor):
         super(Rakieta, self).__init__(szerokosc, wysokosc,x, y,kolor)
 
-        self.maxPredkosc = 10
+        self.maxPredkosc = 5
         self.surface.fill(self.kolor)
     def ruc(self,x):
         if self.rect.x > 0 and self.rect.x < self.x * 2 :
