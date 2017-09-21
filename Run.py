@@ -1,7 +1,19 @@
 import pygame, sys
 import pygame.locals
+
 WIDTH = 500
 HIGHT = 500
+
+def wait():
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                return
+
+
 class PongGame(object):
     def __init__(self,width, height):
         pygame.init()
@@ -20,7 +32,15 @@ class PongGame(object):
         self.player2 = Rakieta(100,20,width/2-50,50,(0,0,255))
         self.komputer = Komputer(self.player2, self.pileczka)
         self.sedzia = Sedzia( self.pileczka, self.player2, self.pileczka)
-
+        self.screen.fill((0, 0, 0))
+        self.screen.blit(bg, (0, 0))
+        self.pileczka.ruch(self.player1, self.player2)
+        self.pileczka.draw_on(self.screen)
+        self.player1.draw_on(self.screen)
+        self.player2.draw_on(self.screen)
+        self.sedzia.draw_on(self.screen)
+        pygame.display.update()
+        wait()
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -34,7 +54,6 @@ class PongGame(object):
 
             self.screen.fill((0,0,0))
             self.screen.blit(bg, (0,0))
-            
             self.pileczka.ruch(self.player1,self.player2)
             self.pileczka.draw_on(self.screen)
             self.player1.draw_on(self.screen)
@@ -44,6 +63,7 @@ class PongGame(object):
             pygame.display.update()
             self.fps_clock.tick(60)
             self.komputer.ruch()
+
 
 class Przedmioty(object):
     def __init__(self,szerokosc, wysokosc, x, y,kolor=(0, 0, 100)):
@@ -81,6 +101,7 @@ class Pileczka(Przedmioty):
         self.rect.y = 250
 
         self.odwrocY()
+        wait()
 
     def ruch(self, *args):
         self.rect.x += self.predkoscX
