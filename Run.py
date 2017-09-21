@@ -12,9 +12,6 @@ class PongGame(object):
         pygame.mixer.music.load('MBG.wav')
         pygame.mixer.music.play(-1, 0.0)
         bg = pygame.image.load("background.jpg")
-        pygame.font.init()
-        font_path = pygame.font.match_font('arial')
-        self.font = pygame.font.Font(font_path, 64)
 
         self.fps_clock = pygame.time.Clock()
 
@@ -37,7 +34,7 @@ class PongGame(object):
 
             self.screen.fill((0,0,0))
             self.screen.blit(bg, (0,0))
-
+            
             self.pileczka.ruch(self.player1,self.player2)
             self.pileczka.draw_on(self.screen)
             self.player1.draw_on(self.screen)
